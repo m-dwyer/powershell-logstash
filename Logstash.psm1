@@ -6,6 +6,7 @@
         ValueFromPipeline=$true)
     ]
     [Object]$InputObject,
+    [int] $Depth = 1,
     [String]$HostName,
     [String]$Port
     )
@@ -21,7 +22,7 @@
 
     process {
         Write-Verbose "Writing JSON object to TCP stream.."
-        $jsonObject = ((ConvertTo-Json $InputObject) -replace "`r", ' ' -replace "`n", ' ')
+        $jsonObject = ((ConvertTo-Json -Depth $Depth $InputObject) -replace "`r", ' ' -replace "`n", ' ')
         $writer.WriteLine($jsonObject)
     }
 
